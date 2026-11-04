@@ -53,7 +53,10 @@ $$ Ce qu'on doit vérifier
 - Que la cliente arrive à modifier son agenda
 
 
-Arborescence du site:
+
+## Arborescence du site
+
+```text
 NÉOTISSE
 │
 └── ACCUEIL
@@ -77,4 +80,4 @@ NÉOTISSE
     └── À propos
         ├── Histoire, mission et équipe
         └── Partenaires
-
+```
