@@ -28,6 +28,49 @@ if (content) {
     element.textContent = value;
     return element;
   };
+  content.services?.forEach((service) => {
+    const detail = document.getElementById(service.slug);
+    if (detail?.classList.contains('atelier')) {
+      detail.querySelector('h2').textContent = service.title;
+      detail.querySelector('.split > div > p').textContent = service.description;
+      const shortcut = document.querySelector('.atelier-index a[href="#' + service.slug + '"]');
+      if (shortcut) shortcut.textContent = shortcut.textContent.split(' · ')[0] + ' · ' + service.title;
+    }
+    const card = document.querySelector('.linen-catalogue a[href="services.html#' + service.slug + '"]')?.closest('article');
+    if (card) {
+      card.querySelector('h3').textContent = service.title;
+      card.querySelector('p').textContent = service.description;
+    }
+  });
+  if (content.partners) {
+    document.querySelectorAll('.partner-logos').forEach((list) => {
+      list.replaceChildren(...content.partners.map((partner, index) => {
+        const item = document.createElement('li');
+        item.style.setProperty('--logo-order', index);
+        if (partner.image) {
+          const logo = document.createElement('img');
+          logo.src = 'assets/partenaires/' + partner.image;
+          logo.alt = '';
+          logo.loading = 'lazy';
+          item.append(logo);
+        }
+        item.append(make('span', partner.name));
+        return item;
+      }));
+    });
+  }
+  const coordinates = content.coordinates?.[0];
+  if (coordinates) {
+    document.querySelectorAll('[data-contact-city]').forEach((place) => { place.textContent = coordinates.city; });
+    document.querySelectorAll('a[href="mailto:contact@neotisse.org"]').forEach((link) => {
+      link.href = 'mailto:' + coordinates.email;
+      link.textContent = coordinates.email;
+    });
+    document.querySelectorAll('footer a[href*="instagram.com"]').forEach((link) => {
+      if (coordinates.instagram) link.href = coordinates.instagram;
+      else link.hidden = true;
+    });
+  }
   const eventList = document.querySelector('.events');
   if (eventList) {
     const format = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' });
@@ -132,11 +175,45 @@ if (contact) {
   const subject = contact.elements.namedItem('subject');
   const body = contact.elements.namedItem('body');
   if (new URLSearchParams(location.search).get('motif') === 'devis') subject.value = 'Devis';
-  contact.addEventListener('submit', (event) => {
-    event.preventDefault();
-    location.href = 'mailto:contact@neotisse.org?subject=' + encodeURIComponent(subject.value)
-      + '&body=' + encodeURIComponent(body.value);
-  });
+  const email = content?.coordinates?.[0]?.email || 'contact@neotisse.org';
+  const localPreview = location.hostname === '127.0.0.1' && location.pathname.startsWith('/apercu/');
+  contact.action = 'mailto:' + email;
+  if (localPreview) {
+    const label = document.createElement('label');
+    label.htmlFor = 'reply-email';
+    label.textContent = 'Ton adresse e-mail';
+    const input = document.createElement('input');
+    input.id = 'reply-email';
+    input.name = 'email';
+    input.type = 'email';
+    input.required = true;
+    input.maxLength = 200;
+    contact.prepend(label, input);
+    const feedback = contact.querySelector('.note');
+    feedback.setAttribute('role', 'status');
+    feedback.textContent = 'Le message sera reçu dans le back-office local.';
+    const sendButton = contact.querySelector('button');
+    sendButton.textContent = 'Envoyer le message';
+    contact.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      sendButton.disabled = true;
+      try {
+        const response = await fetch('/messages/envoyer', { method: 'POST', body: new URLSearchParams(new FormData(contact)) });
+        feedback.textContent = response.ok ? 'Message reçu dans le back-office.' : 'Envoi impossible. Vérifie les champs.';
+        if (response.ok) contact.reset();
+      } catch {
+        feedback.textContent = 'Impossible de joindre le back-office.';
+      } finally {
+        sendButton.disabled = false;
+      }
+    });
+  } else {
+    contact.addEventListener('submit', (event) => {
+      event.preventDefault();
+      location.href = 'mailto:' + email + '?subject=' + encodeURIComponent(subject.value)
+        + '&body=' + encodeURIComponent(body.value);
+    });
+  }
 }
 
 const partnerLogos = document.querySelector('.partner-logos');

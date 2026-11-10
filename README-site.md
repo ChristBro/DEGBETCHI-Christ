@@ -17,3 +17,7 @@ Dans le terminal de VS Code, depuis le dossier du site, lancez `node admin/serve
 Ajoutez, modifiez ou retirez les événements et les avis, puis cliquez sur **Enregistrer**. Le statut « Fictif » affiche une mention sur le site. Rechargez l’accueil ou l’agenda pour voir les changements. Ils sont stockés dans `content.js`, que vous pouvez ensuite inclure dans un commit.
 
 Le back-office fonctionne sur votre ordinateur. Les visiteurs consultent le site statique. Arrêtez le back-office avec Ctrl + C dans le terminal.
+
+Le back-office propose six menus : Rendez-vous, Prestations, Partenaires, Livre d’or, Messages reçus et Coordonnées. Les prestations existantes peuvent être renommées et leurs descriptions modifiées. Pour associer un logo à un partenaire, placez son image dans `assets/partenaires/` et indiquez le nom du fichier.
+
+Pour tester la boîte de réception, utilisez [le formulaire de contact dans l’aperçu local](http://127.0.0.1:4173/apercu/contact.html). La boîte de réception est conservée sur cet ordinateur et exclue de Git. La version statique du site continue d’ouvrir la messagerie du visiteur.

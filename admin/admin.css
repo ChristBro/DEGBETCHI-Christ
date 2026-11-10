@@ -25,3 +25,9 @@ button:hover { background: #35426a; }
 .remove:hover { background: #f4cad8; }
 .save { position: sticky; bottom: 0; display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .85rem 0; border-top: 1px solid #ded8ca; background: #f5f3ee; }
 .save span { font-size: .85rem; }
+
+nav { flex-wrap: wrap; }
+nav a { padding: .5rem .75rem; border-radius: .45rem; border: 1px solid #ead9ae65; text-decoration: none; }
+nav a[aria-current] { color: #1c264a; background: #ead9ae; }
+#messages article { background: white; border: 1px solid #ded8ca; border-radius: .65rem; padding: 1rem; margin: 0 0 1rem; }
+.message-body { white-space: pre-wrap; overflow-wrap: anywhere; }

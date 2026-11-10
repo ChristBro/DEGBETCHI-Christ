@@ -1,0 +1,65 @@
+{
+  "services": [
+    {
+      "slug": "filage",
+      "image": "demonstration.jpg",
+      "title": "Filage au fuseau",
+      "description": "De la fibre au fil, découvrez la préparation des matières et les gestes du fuseau ou de la quenouille."
+    },
+    {
+      "slug": "metier",
+      "image": "mediation.jpg",
+      "title": "Tissage sur métier vertical",
+      "description": "Observez comment la chaîne est tendue et comment le passage de la trame forme l’étoffe."
+    },
+    {
+      "slug": "tablettes",
+      "image": "ceintures.jpg",
+      "title": "Tissage aux tablettes",
+      "description": "Manipulez les tablettes et découvrez comment leurs rotations construisent les motifs d’une bande tissée."
+    },
+    {
+      "slug": "teinture",
+      "image": "experimentation.jpg",
+      "title": "Teinture naturelle",
+      "description": "Découvrez les matières tinctoriales, la préparation des bains et les étapes de coloration des fibres."
+    }
+  ],
+  "partners": [
+    {
+      "image": "cerac.webp",
+      "name": "CERAC"
+    },
+    {
+      "image": "festival-du-lin.webp",
+      "name": "Festival du lin"
+    },
+    {
+      "image": "lozere-tourisme.png",
+      "name": "Lozère Tourisme"
+    },
+    {
+      "image": "musee-de-lattes.png",
+      "name": "Musée archéologique de Lattes"
+    },
+    {
+      "image": "musee-de-gergovie.jpg",
+      "name": "Musée de Gergovie"
+    },
+    {
+      "image": "musee-de-tautavel.png",
+      "name": "Musée de Tautavel"
+    },
+    {
+      "image": "universite-paul-valery.webp",
+      "name": "Université Paul Valéry Montpellier 3"
+    }
+  ],
+  "coordinates": [
+    {
+      "email": "contact@neotisse.org",
+      "city": "Montpellier, France",
+      "instagram": "https://www.instagram.com/neotisse.asso/"
+    }
+  ]
+}
