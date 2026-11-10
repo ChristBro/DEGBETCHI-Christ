@@ -9,3 +9,11 @@ Pour consulter le site, ouvrez **index.html** dans votre navigateur. Aucun tél�
 - **assets/** contient le logo et les photos récupérés du site Néotisse.
 
 Les dates de l’agenda sont les exemples fictifs du WordPress. Le contact ouvre un brouillon dans la messagerie du visiteur. Les liens de mentions légales et certaines fiches d’événements ouvrent le site WordPress de démonstration.
+
+## Back-office local
+
+Dans le terminal de VS Code, depuis le dossier du site, lancez `node admin/server.mjs` avec Node.js 22 ou plus récent. Ouvrez ensuite [le back-office](http://127.0.0.1:4173/).
+
+Ajoutez, modifiez ou retirez les événements et les avis, puis cliquez sur **Enregistrer**. Le statut « Fictif » affiche une mention sur le site. Rechargez l’accueil ou l’agenda pour voir les changements. Ils sont stockés dans `content.js`, que vous pouvez ensuite inclure dans un commit.
+
+Le back-office fonctionne sur votre ordinateur. Les visiteurs consultent le site statique. Arrêtez le back-office avec Ctrl + C dans le terminal.

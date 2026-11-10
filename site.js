@@ -21,6 +21,52 @@ document.addEventListener('keydown', (event) => {
 mobile.addEventListener('change', syncMenu);
 syncMenu();
 
+const content = window.neotisseContent;
+if (content) {
+  const make = (tag, value) => {
+    const element = document.createElement(tag);
+    element.textContent = value;
+    return element;
+  };
+  const eventList = document.querySelector('.events');
+  if (eventList) {
+    const format = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' });
+    const ordered = [...content.events].sort((a, b) => a.date.localeCompare(b.date));
+    const entries = document.querySelector('.calendar') ? ordered : ordered.slice(0, 3);
+    eventList.replaceChildren(...entries.map((event, index) => {
+      const article = document.createElement('article');
+      article.dataset.month = event.date.slice(0, 7);
+      article.id = 'evenement-' + event.date + '-' + (index + 1);
+      const date = make('time', [format.format(new Date(event.date + 'T12:00:00')), event.time].filter(Boolean).join(' · '));
+      date.dateTime = event.date;
+      const place = make('p', [event.demo ? 'Exemple fictif' : '', event.place].filter(Boolean).join(' · '));
+      place.className = 'note';
+      article.append(date, make('h3', event.title), make('p', event.description), place);
+      if (event.url) {
+        const link = make('a', 'Voir les détails ↗');
+        link.href = event.url;
+        link.className = 'text-link';
+        article.append(link);
+      }
+      return article;
+    }));
+    if (!entries.length && !document.querySelector('.calendar')) {
+      eventList.append(make('p', 'Aucun événement annoncé pour le moment.'));
+    }
+  }
+  const guestbook = document.querySelector('.guestbook');
+  if (guestbook) {
+    guestbook.replaceChildren(...content.reviews.map((review) => {
+      const figure = document.createElement('figure');
+      const caption = [review.name, review.activity, review.demo ? 'Avis fictif' : ''].filter(Boolean).join(' · ');
+      figure.append(make('blockquote', '« ' + review.quote + ' »'), make('figcaption', caption));
+      return figure;
+    }));
+    if (!content.reviews.length) guestbook.append(make('p', 'Aucun avis publié pour le moment.'));
+  }
+}
+
+
 const calendar = document.querySelector('.calendar');
 if (calendar) {
   const monthHeading = calendar.querySelector('#calendar-month');
@@ -29,11 +75,11 @@ if (calendar) {
   const events = [...document.querySelectorAll('.events article[data-month]')];
   const monthFormat = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric' });
   const dayFormat = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'full' });
-  const month = new Date(events[0].querySelector('time').dateTime + 'T12:00:00');
+  const month = events.length ? new Date(events[0].querySelector('time').dateTime + 'T12:00:00') : new Date();
   month.setDate(1);
 
   events.forEach((event) => {
-    event.id = 'evenement-' + event.querySelector('time').dateTime;
+    event.id ||= 'evenement-' + event.querySelector('time').dateTime;
     event.tabIndex = -1;
   });
 
@@ -51,7 +97,7 @@ if (calendar) {
       event.hidden = event.dataset.month !== monthKey;
       if (!event.hidden) {
         const day = Number(event.querySelector('time').dateTime.slice(-2));
-        eventsByDay.set(day, event);
+        if (!eventsByDay.has(day)) eventsByDay.set(day, event);
       }
     });
     empty.hidden = eventsByDay.size > 0;
