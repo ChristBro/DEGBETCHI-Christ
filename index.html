@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Néotisse, association montpelliéraine de médiation des savoir-faire textiles anciens.">
-<title>Accueil · Néotisse</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="page-motion.css?v=agenda"><link rel="stylesheet" href="neotisse.css?v=textile"><script src="content.js" defer></script><script src="site.js?v=menus" defer></script></head>
+<title>Accueil · Néotisse</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="page-motion.css?v=agenda"><link rel="stylesheet" href="neotisse.css?v=accueil"><script src="content.js" defer></script><script src="site.js?v=menus" defer></script></head>
 <body class="animated-page neotisse-home"><div class="reading-progress" aria-hidden="true"></div><a class="skip" href="#contenu">Aller au contenu</a>
 <header class="site-header"><div class="masthead"><span class="nav-botanical nav-botanical-left" aria-hidden="true"><svg class="nav-sprig" viewBox="0 0 180 52" aria-hidden="true" focusable="false">
   <path class="sprig-stem" pathLength="1" d="M5 43 C42 42 68 29 99 25 S150 16 174 8 M45 38 Q61 29 67 16 M83 28 Q102 31 117 39 M119 22 Q131 16 136 6"/>
@@ -92,9 +92,26 @@
   </svg>
 </div>
 
-<main id="contenu"><section class="hero hero-home" style="--photo:url('assets/ceintures.jpg')">
-      <div><h1>Néotisse<br><span>Ateliers textiles</span></h1><p class="lead">Du Néolithique au Moyen Âge, redécouvrez les gestes du filage, du tissage et de la teinture.</p><a class="button light" href="services.html">Découvrir les ateliers</a></div>
-    </section><section class="neotisse-intro"><h2>Faire vivre les savoir-faire du fil.</h2><p>Fondée en mai 2024 à Montpellier, Néotisse rend accessibles les techniques textiles anciennes à travers une approche scientifique et sensorielle.</p></section><section class="split reverse neotisse-feature"><img src="assets/demonstration.jpg" alt="Démonstration par Néotisse" loading="lazy">
+<main id="contenu"><section class="home-hero" aria-labelledby="home-title">
+  <div class="home-hero-copy">
+    <h1 id="home-title">Néotisse</h1>
+    <p class="home-hero-line">Le fil des gestes anciens</p>
+    <p class="home-hero-summary">Du Néolithique au Moyen Âge, redécouvrez les gestes du filage, du tissage et de la teinture.</p>
+    <div class="home-hero-links">
+      <a class="button" href="services.html">Découvrir les ateliers</a>
+      <a class="home-hero-secondary" href="nos-actions.html">Nos actions <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+  <div class="home-hero-visual">
+    <figure>
+      <img src="assets/ceintures.jpg" alt="Fils tendus sur un métier à tisser en bois" fetchpriority="high">
+      <figcaption>Le tissage aux tablettes</figcaption>
+    </figure>
+    <svg class="home-hero-thread" viewBox="0 0 180 96" aria-hidden="true" focusable="false">
+      <path pathLength="1" d="M3 82C30 61 37 91 71 70S103 13 84 15 60 57 88 60 143 19 176 9"/>
+    </svg>
+  </div>
+</section><section class="neotisse-intro"><h2>Faire vivre les savoir-faire du fil.</h2><p>Fondée en mai 2024 à Montpellier, Néotisse rend accessibles les techniques textiles anciennes à travers une approche scientifique et sensorielle.</p></section><section class="split reverse neotisse-feature"><img src="assets/demonstration.jpg" alt="Démonstration par Néotisse" loading="lazy">
       <div><h2>Des gestes à observer et à essayer.</h2><p>Démonstrations, médiation culturelle et archéologie expérimentale font dialoguer les matières, les outils et l’histoire.</p><a class="button" href="nos-actions.html">Explorer nos actions</a></div>
     </section><section class="split neotisse-feature">
   <img src="assets/mediation.jpg" alt="Démonstration de techniques textiles anciennes" loading="lazy">
