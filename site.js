@@ -84,7 +84,7 @@ if (content) {
       date.dateTime = event.date;
       const place = make('p', [event.demo ? 'Exemple fictif' : '', event.place].filter(Boolean).join(' · '));
       place.className = 'note';
-      article.append(date, make('h3', event.title), make('p', event.description), place);
+      article.append(make('h3', event.title), date, make('p', event.description), place);
       if (event.url) {
         const link = make('a', 'Voir les détails ↗');
         link.href = event.url;

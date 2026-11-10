@@ -53,7 +53,7 @@ img { display: block; max-width: 100%; }
 .cards article, .events article { background: white; border: 1px solid var(--border); }
 .cards img { width: 100%; aspect-ratio: 1.07; object-fit: cover; }
 .cards article > div, .events article { padding: 1.25rem; }
-.events time { display: block; margin-bottom: .6rem; }
+.events time { display: block; margin-bottom: .85rem; color: var(--ink); font-size: 1rem; font-weight: 500; letter-spacing: normal; text-transform: none; }
 .center { text-align: center; margin-top: 2rem; }
 .note { color: #68564a; font-size: .88rem; }
 .partners { display: flex; flex-wrap: wrap; justify-content: center; gap: .65rem; padding: 0; list-style: none; }
