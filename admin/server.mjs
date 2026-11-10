@@ -57,7 +57,7 @@ function render(data, token, version, message) {
   <title>Administration · Néotisse</title><link rel="stylesheet" href="/admin.css"><script src="/admin.js" defer></script></head>
   <body><header><div><p>NÉOTISSE / ADMINISTRATION LOCALE</p><h1>Contenus du site</h1><p>Gérez les rendez-vous et les avis affichés sur le site.</p></div>
   <nav aria-label="Sections"><a href="#events">Agenda</a><a href="#reviews">Livre d’or</a></nav></header>
-  <main><p class="feedback" role="status">${escape(message)}</p>
+  <main><p>Après avoir enregistré, ouvrez <a href="/apercu/index.html#livre-or" target="_blank" rel="noopener">le livre d’or sur le site local ↗</a>. Pour mettre à jour la version en ligne, partagez le fichier de contenu sur GitHub et redéployez le site.</p><p class="feedback" role="status">${escape(message)}</p>
   <form method="post" action="/"><input type="hidden" name="token" value="${token}"><input type="hidden" name="revision" value="${version}">
   ${sections}<div class="save"><span>Les modifications sont enregistrées dans le projet local.</span><button type="submit">Enregistrer</button></div></form></main></body></html>`;
 }
@@ -93,14 +93,31 @@ function readRecords(form, group) {
 export function adminServer(contentPath) {
   const token = randomBytes(24).toString('hex');
   return createServer(async (req, res) => {
-    const send = (code, type, body) => {
+    const send = (code, type, body, preview = false) => {
       res.writeHead(code, { 'Content-Type': type + '; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff',
-        'Content-Security-Policy': "default-src 'none'; script-src 'self'; style-src 'self'; form-action 'self'; frame-ancestors 'none'" });
+        'Content-Security-Policy': preview
+          ? "default-src 'self'; style-src 'self' 'unsafe-inline'; form-action mailto:; frame-ancestors 'none'"
+          : "default-src 'none'; script-src 'self'; style-src 'self'; form-action 'self'; frame-ancestors 'none'" });
       res.end(body);
     };
     if (!/^127\.0\.0\.1:\d+$/.test(req.headers.host ?? '')) return send(403, 'text/plain', 'Accès local uniquement.');
     if (req.method === 'GET' && ['/admin.css', '/admin.js'].includes(req.url)) {
       return send(200, req.url.endsWith('.css') ? 'text/css' : 'application/javascript', readFileSync(new URL('.' + req.url, import.meta.url)));
+    }
+    if (req.method === 'GET' && req.url.startsWith('/apercu/')) {
+      const file = req.url.slice('/apercu/'.length).split('?')[0];
+      const types = {
+        html: 'text/html', css: 'text/css', js: 'application/javascript',
+        jpg: 'image/jpeg', png: 'image/png', webp: 'image/webp',
+      };
+      const allowed = /^(?:index|a-propos|nos-actions|agenda|services|contact)\.html$|^(?:styles|lux-linen|page-motion)\.css$|^(?:site|content)\.js$|^assets\/(?:partenaires\/)?[a-z0-9-]+\.(?:jpg|png|webp)$/;
+      if (!allowed.test(file)) return send(404, 'text/plain', 'Page introuvable.');
+      try {
+        const path = file === 'content.js' ? contentPath : new URL('../' + file, import.meta.url);
+        return send(200, types[file.split('.').at(-1)], readFileSync(path), true);
+      } catch {
+        return send(404, 'text/plain', 'Page introuvable.');
+      }
     }
     if (!['/', '/?saved=1'].includes(req.url)) return send(404, 'text/plain', 'Page introuvable.');
     try {
