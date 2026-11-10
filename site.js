@@ -36,7 +36,7 @@ if (content) {
       const shortcut = document.querySelector('.atelier-index a[href="#' + service.slug + '"]');
       if (shortcut) shortcut.textContent = shortcut.textContent.split(' · ')[0] + ' · ' + service.title;
     }
-    const card = document.querySelector('.linen-catalogue a[href="services.html#' + service.slug + '"]')?.closest('article');
+    const card = document.querySelector('.neotisse-catalogue a[href="services.html#' + service.slug + '"]')?.closest('article');
     if (card) {
       card.querySelector('h3').textContent = service.title;
       card.querySelector('p').textContent = service.description;

@@ -36,36 +36,36 @@
 .animated-page .hero::before { background:linear-gradient(#1c264a44,#1c264a66), var(--photo) center 49% / cover; }
 .animated-page .cta, .animated-page footer { background:var(--ink); color:white; }
 .animated-page .events article:nth-child(n), .guestbook figure:nth-child(n) { border-top-color:#ac8c45; }
-.linen-home .hero-home { min-height:clamp(540px,66vw,840px); }
-.linen-home .hero-home h1 { font-size:clamp(3.4rem,9.6vw,120px); line-height:.98; letter-spacing:-.05em; }
-.linen-home .hero-home h1 span { font-size:.78em; }
-.linen-home .hero-home .lead { font-size:1rem; max-width:560px; }
-.linen-intro { max-width:980px; padding:clamp(4rem,10vw,9rem) 1.5rem; margin:auto; text-align:center; }
-.linen-intro h2 { max-width:780px; margin-inline:auto; font-size:clamp(2.6rem,5vw,60px); }
-.linen-home .linen-feature {
+.neotisse-home .hero-home { min-height:clamp(540px,66vw,840px); }
+.neotisse-home .hero-home h1 { font-size:clamp(3.4rem,9.6vw,120px); line-height:.98; letter-spacing:-.05em; }
+.neotisse-home .hero-home h1 span { font-size:.78em; }
+.neotisse-home .hero-home .lead { font-size:1rem; max-width:560px; }
+.neotisse-intro { max-width:980px; padding:clamp(4rem,10vw,9rem) 1.5rem; margin:auto; text-align:center; }
+.neotisse-intro h2 { max-width:780px; margin-inline:auto; font-size:clamp(2.6rem,5vw,60px); }
+.neotisse-home .neotisse-feature {
   width:min(calc(100% - clamp(2rem,6.4vw,5rem)),1500px); padding:0; gap:0;
   margin:0 auto clamp(2rem,6vw,6rem); background:var(--ink); color:white;
 }
-.linen-home .linen-feature > div { text-align:center; max-width:none; padding:clamp(2rem,5vw,5rem); }
-.linen-home .linen-feature img { min-height:clamp(360px,43vw,590px); max-height:none; border-radius:0; filter:brightness(.9); }
-.linen-home .linen-feature:hover img { transform:none; }
-.linen-home .linen-feature .button { color:#171717; background:white; }
-.linen-home .linen-feature .button:hover { background:#f4efe2; }
-.linen-home .linen-promo { color:var(--ink); background:var(--light); }
-.linen-home .linen-promo .button { color:white; background:var(--ink); }
-.linen-home .linen-promo .button:hover { background:#35426a; }
-.linen-catalogue .section-heading h2, .linen-home #livre-or h2 { font-size:clamp(1.8rem,3vw,36px); }
-.linen-catalogue .section-heading h2 { text-transform:uppercase; }
-.linen-catalogue .cards article { border:0; text-align:center; }
-.linen-catalogue .cards img { aspect-ratio:1; }
-.linen-catalogue .cards h3 { font:600 1rem/1.35 Arial,sans-serif; letter-spacing:0; }
+.neotisse-home .neotisse-feature > div { text-align:center; max-width:none; padding:clamp(2rem,5vw,5rem); }
+.neotisse-home .neotisse-feature img { min-height:clamp(360px,43vw,590px); max-height:none; border-radius:0; filter:brightness(.9); }
+.neotisse-home .neotisse-feature:hover img { transform:none; }
+.neotisse-home .neotisse-feature .button { color:#171717; background:white; }
+.neotisse-home .neotisse-feature .button:hover { background:#f4efe2; }
+.neotisse-home .neotisse-promo { color:var(--ink); background:var(--light); }
+.neotisse-home .neotisse-promo .button { color:white; background:var(--ink); }
+.neotisse-home .neotisse-promo .button:hover { background:#35426a; }
+.neotisse-catalogue .section-heading h2, .neotisse-home #livre-or h2 { font-size:clamp(1.8rem,3vw,36px); }
+.neotisse-catalogue .section-heading h2 { text-transform:uppercase; }
+.neotisse-catalogue .cards article { border:0; text-align:center; }
+.neotisse-catalogue .cards img { aspect-ratio:1; }
+.neotisse-catalogue .cards h3 { font:600 1rem/1.35 Arial,sans-serif; letter-spacing:0; }
 @media (max-width:700px) {
   .animated-page .site-header { padding:.4rem 1rem; }
   .animated-page .site-header .brand img { height:58px; }
   .animated-page .site-header nav { gap:.45rem 1.3rem; padding-bottom:.5rem; }
   .animated-page :is(main,section,.atelier)[id], .events article[id] { scroll-margin-top:6rem; }
-  .linen-home .hero-home { min-height:510px; }
-  .linen-home .linen-feature img { min-height:0; aspect-ratio:1.2; }
+  .neotisse-home .hero-home { min-height:510px; }
+  .neotisse-home .neotisse-feature img { min-height:0; aspect-ratio:1.2; }
 }
 
 .animated-page footer {
