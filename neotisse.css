@@ -402,38 +402,38 @@
 }
 .home-hero-secondary:hover { background: #faf8f3; }
 
-/* Contact form */
+/* Contact */
 .animated-page .contact {
-  align-items: center;
-  gap: clamp(2rem, 5vw, 5rem);
-  background: linear-gradient(135deg, #fff 40%, #faf4e9);
+  align-items: start;
+  gap: clamp(2rem, 7vw, 7rem);
+  background: #faf6ee;
 }
 .animated-page .contact > div { max-width: 34rem; }
 .animated-page .contact > div h2 { color: var(--terracotta); }
 .animated-page .contact form {
   position: relative;
   min-width: 0;
-  padding: clamp(1.25rem, 3vw, 2.5rem);
-  border: 1px solid #e9dac8;
-  border-top: 4px solid var(--terracotta);
-  border-radius: 1.25rem;
-  background: #fffdfa;
-  box-shadow: 0 16px 44px #563a2010;
-  gap: .6rem;
+  padding: .5rem 0 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  gap: .75rem;
 }
 .animated-page .contact form label {
-  margin-top: .4rem;
+  margin-top: 1.25rem;
   color: #653724;
-  font-size: .95rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 500;
 }
 .animated-page .contact form :is(input, select, textarea) {
   width: 100%;
   min-width: 0;
-  padding: .85rem 1rem;
-  border: 1px solid #d8c8b5;
-  border-radius: .65rem;
-  background: white;
+  padding: .85rem .25rem;
+  border: 0;
+  border-bottom: 1px solid #a7927a;
+  border-radius: 0;
+  background: transparent;
   color: var(--ink);
   font: inherit;
   line-height: 1.5;
@@ -447,16 +447,16 @@
   border-color: var(--terracotta);
   outline: 2px solid #8e402b;
   outline-offset: 2px;
-  box-shadow: 0 0 0 5px #8e402b12;
+  box-shadow: none;
 }
 .animated-page .contact form .note {
-  margin: .6rem 0;
+  margin: 1rem 0;
   color: #6e6253;
   font-size: .85rem;
   text-align: center;
 }
 .animated-page .contact form .button {
-  margin-top: .2rem;
+  margin-top: 1rem;
   border-radius: 999px;
   min-height: 48px;
   padding-inline: clamp(1rem, 4vw, 2.75rem);
@@ -483,10 +483,11 @@
   justify-content: space-between;
   gap: 1rem;
   width: 100%;
-  padding: .85rem 1rem;
-  border: 1px solid #d8c8b5;
-  border-radius: .65rem;
-  background: white;
+  padding: .85rem .25rem;
+  border: 0;
+  border-bottom: 1px solid #a7927a;
+  border-radius: 0;
+  background: transparent;
   color: var(--ink);
   font: inherit;
   text-align: left;
@@ -507,8 +508,8 @@
   padding: .4rem;
   background: #fffdfa;
   border: 1px solid #e9dac8;
-  border-radius: .8rem;
-  box-shadow: 0 12px 30px #563a2026;
+  border-radius: .2rem;
+  box-shadow: 0 6px 16px #563a2014;
   transform-origin: top;
 }
 .subject-options button {
