@@ -128,17 +128,41 @@ if (content) {
       const place = make('p', [event.demo ? 'Exemple fictif' : '', event.place].filter(Boolean).join(' · '));
       place.className = 'note';
       article.append(make('h3', event.title), date, make('p', event.description), place);
-      if (event.url) {
-        const link = make('a', 'Voir les détails ↗');
-        link.href = event.url;
-        link.className = 'text-link';
-        article.append(link);
-      }
+      const link = make('a', 'Voir les détails ↗');
+      link.href = 'evenement.html?' + new URLSearchParams({ date: event.date, titre: event.title });
+      link.className = 'text-link';
+      article.append(link);
       return article;
     }));
     if (!entries.length && !document.querySelector('.calendar')) {
       eventList.append(make('p', 'Aucun événement annoncé pour le moment.'));
     }
+  }
+  const eventDetail = document.querySelector('#event-detail');
+  if (eventDetail) {
+    const params = new URLSearchParams(location.search);
+    const event = content.events.find((item) => item.date === params.get('date') && item.title === params.get('titre'));
+    if (event) {
+      document.querySelector('#event-title').textContent = event.title;
+      document.title = event.title + ' · Néotisse';
+      const date = make('p', [new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' }).format(new Date(event.date + 'T12:00:00')), event.time].filter(Boolean).join(' · '));
+      eventDetail.replaceChildren(date, make('p', event.place), make('p', event.description));
+      if (event.demo) eventDetail.append(make('p', 'Événement fictif présenté à titre de démonstration.'));
+      if (event.url && !event.url.includes('silver-lolly-6cfc5f.netlify.app')) {
+        const external = make('a', 'Informations complémentaires ↗');
+        external.href = event.url;
+        eventDetail.append(external);
+      }
+    } else {
+      document.querySelector('#event-title').textContent = 'Événement introuvable';
+      eventDetail.replaceChildren(make('p', 'Cet événement a été modifié ou retiré de l’agenda.'));
+    }
+    const back = make('a', 'Retour à l’agenda');
+    back.href = 'agenda.html#rendez-vous';
+    back.className = 'button';
+    const row = document.createElement('p');
+    row.append(back);
+    eventDetail.append(row);
   }
   const guestbook = document.querySelector('.guestbook');
   if (guestbook) {

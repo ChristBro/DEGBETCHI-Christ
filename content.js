@@ -69,7 +69,7 @@ window.neotisseContent = {
       "time": "14 h à 16 h",
       "place": "Montpellier",
       "description": "Découvrez comment les fibres deviennent un fil et essayez les gestes du filage au fuseau.",
-      "url": "https://silver-lolly-6cfc5f.netlify.app/evenements/initiation-au-filage-au-fuseau-exemple/",
+      "url": "",
       "demo": true
     },
     {
@@ -78,7 +78,7 @@ window.neotisseContent = {
       "time": "10 h à 12 h 30",
       "place": "Montpellier",
       "description": "Une découverte des fils, des motifs et des gestes du tissage aux tablettes.",
-      "url": "https://silver-lolly-6cfc5f.netlify.app/evenements/decouverte-du-tissage-aux-tablettes-exemple/",
+      "url": "",
       "demo": true
     },
     {
@@ -87,7 +87,7 @@ window.neotisseContent = {
       "time": "14 h 30 à 17 h",
       "place": "Montpellier",
       "description": "Explorez le rôle des plantes, des fibres et des bains de teinture.",
-      "url": "https://silver-lolly-6cfc5f.netlify.app/evenements/couleurs-et-teinture-vegetale-exemple/",
+      "url": "",
       "demo": true
     },
     {
@@ -96,7 +96,7 @@ window.neotisseContent = {
       "time": "14 h à 16 h",
       "place": "Montpellier",
       "description": "Test",
-      "url": "https://silver-lolly-6cfc5f.netlify.app/evenements/couleurs-et-teinture-vegetale-exemple/",
+      "url": "",
       "demo": true
     }
   ],

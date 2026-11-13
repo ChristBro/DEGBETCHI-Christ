@@ -15,7 +15,7 @@ const groups = {
       ['time', 'Horaire', 'text', 80],
       ['place', 'Lieu', 'text', 160],
       ['description', 'Description', 'textarea', 2000, true],
-      ['url', 'Lien vers les détails', 'url', 600],
+      ['url', 'Lien complémentaire (facultatif)', 'url', 600],
     ],
   },
   services: {
@@ -140,7 +140,7 @@ export function adminServer(contentPath) {
         html: 'text/html', css: 'text/css', js: 'application/javascript',
         jpg: 'image/jpeg', png: 'image/png', webp: 'image/webp',
       };
-      const allowed = /^(?:index|a-propos|nos-actions|agenda|services|contact|mentions-legales|politique-de-confidentialite|gestion-des-cookies)\.html$|^(?:styles|neotisse|page-motion)\.css$|^(?:site|content)\.js$|^assets\/(?:partenaires\/)?[a-z0-9-]+\.(?:jpg|png|webp)$/;
+      const allowed = /^(?:index|a-propos|nos-actions|agenda|services|contact|evenement|mentions-legales|politique-de-confidentialite|gestion-des-cookies)\.html$|^(?:styles|neotisse|page-motion)\.css$|^(?:site|content)\.js$|^assets\/(?:partenaires\/)?[a-z0-9-]+\.(?:jpg|png|webp)$/;
       if (!allowed.test(file)) return send(404, 'text/plain', 'Page introuvable.');
       try {
         const path = file === 'content.js' ? contentPath : new URL('../' + file, import.meta.url);
