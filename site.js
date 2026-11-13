@@ -218,20 +218,11 @@ if (contact) {
   const subject = contact.elements.namedItem('subject');
   const body = contact.elements.namedItem('body');
   if (new URLSearchParams(location.search).get('motif') === 'devis') subject.value = 'Devis';
-  const email = content?.coordinates?.[0]?.email || 'contact@neotisse.org';
   const localPreview = location.hostname === '127.0.0.1' && location.pathname.startsWith('/apercu/');
-  contact.action = 'mailto:' + email;
+  if (location.protocol === 'file:') {
+    location.replace('http://127.0.0.1:4173/apercu/contact.html' + location.search);
+  }
   if (localPreview) {
-    const label = document.createElement('label');
-    label.htmlFor = 'reply-email';
-    label.textContent = 'Ton adresse e-mail';
-    const input = document.createElement('input');
-    input.id = 'reply-email';
-    input.name = 'email';
-    input.type = 'email';
-    input.required = true;
-    input.maxLength = 200;
-    contact.prepend(label, input);
     const feedback = contact.querySelector('.note');
     feedback.setAttribute('role', 'status');
     feedback.textContent = 'Le message sera reçu dans le back-office local.';
@@ -251,11 +242,9 @@ if (contact) {
       }
     });
   } else {
-    contact.addEventListener('submit', (event) => {
-      event.preventDefault();
-      location.href = 'mailto:' + email + '?subject=' + encodeURIComponent(subject.value)
-        + '&body=' + encodeURIComponent(body.value);
-    });
+    contact.querySelector('.note').textContent = 'L’envoi direct est disponible dans l’aperçu local. Contactez-nous par e-mail pour une demande en ligne.';
+    contact.querySelector('button').disabled = true;
+    contact.addEventListener('submit', (event) => event.preventDefault());
   }
 }
 
