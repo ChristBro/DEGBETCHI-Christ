@@ -169,7 +169,7 @@ if (content) {
     guestbook.replaceChildren(...content.reviews.map((review) => {
       const figure = document.createElement('figure');
       const caption = [review.name, review.activity, review.demo ? 'Avis fictif' : ''].filter(Boolean).join(' · ');
-      figure.append(make('blockquote', '« ' + review.quote + ' »'), make('figcaption', caption));
+      figure.append(make('blockquote', '«\u00a0' + review.quote.trim() + '\u00a0»'), make('figcaption', caption));
       return figure;
     }));
     if (!content.reviews.length) guestbook.append(make('p', 'Aucun avis publié pour le moment.'));
