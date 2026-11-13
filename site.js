@@ -225,7 +225,7 @@ if (contact) {
   if (localPreview) {
     const feedback = contact.querySelector('.note');
     feedback.setAttribute('role', 'status');
-    feedback.textContent = 'Le message sera reçu dans le back-office local.';
+    feedback.textContent = '';
     const sendButton = contact.querySelector('button');
     sendButton.textContent = 'Envoyer le message';
     contact.addEventListener('submit', async (event) => {
@@ -233,7 +233,7 @@ if (contact) {
       sendButton.disabled = true;
       try {
         const response = await fetch('/messages/envoyer', { method: 'POST', body: new URLSearchParams(new FormData(contact)) });
-        feedback.textContent = response.ok ? 'Message reçu dans le back-office.' : 'Envoi impossible. Vérifie les champs.';
+        feedback.textContent = response.ok ? 'Votre message a bien été envoyé.' : 'Envoi impossible. Vérifie les champs.';
         if (response.ok) contact.reset();
       } catch {
         feedback.textContent = 'Impossible de joindre le back-office.';
