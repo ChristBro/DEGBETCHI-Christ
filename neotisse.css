@@ -537,3 +537,23 @@
 }
 @keyframes unfold-subject { from { opacity: 0; transform: translateY(-6px) scaleY(.94); } to { opacity: 1; transform: none; } }
 @keyframes subject-choice { from { opacity: 0; translate: 0 -4px; } to { opacity: 1; translate: 0 0; } }
+
+/* White actions on the yellow presentation panels. */
+.neotisse-home .neotisse-feature .button,
+.neotisse-home .neotisse-feature .button:hover,
+.neotisse-home .neotisse-feature .button:focus-visible {
+  background: white;
+  color: var(--ink);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .animated-page :is(.button, .home-hero-secondary) {
+    transition: transform .24s ease, background-color .24s ease, color .24s ease, box-shadow .24s ease;
+  }
+  .animated-page :is(.button, .home-hero-secondary):is(:hover, :focus-visible) {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px #39271e29;
+  }
+  .animated-page :is(.button, .home-hero-secondary):active {
+    transform: translateY(1px);
+  }
+}
