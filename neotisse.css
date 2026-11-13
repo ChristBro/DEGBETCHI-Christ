@@ -574,6 +574,7 @@
   text-align: left;
 }
 .neotisse-home #livre-or h2 {
+  text-align: center;
   font-size: clamp(2.4rem, 4vw, 3.5rem);
   color: var(--terracotta);
   line-height: 1.1;
