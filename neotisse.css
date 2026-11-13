@@ -328,3 +328,46 @@
 .animated-page .footer-bottom { border-top-color: #b8932e; }
 .calendar-days a { background: #ffe88a; color: #352d1b; }
 .calendar-days a:hover { background: #ffdf68; color: #352d1b; }
+
+/* Terracotta shared by the page headers. */
+.animated-page { --terracotta: #8e402b; }
+.animated-page .site-header {
+  border-bottom: 2px solid var(--terracotta);
+}
+.animated-page .site-header nav a { color: var(--terracotta); }
+.animated-page .site-header nav a[aria-current] {
+  color: #693321;
+  box-shadow: inset 0 -2px var(--terracotta);
+}
+.animated-page .site-header nav a:hover { color: #693321; }
+.animated-page .site-header .menu-toggle {
+  color: var(--terracotta);
+  border-color: var(--terracotta);
+}
+.animated-page .hero {
+  border-bottom: 5px solid var(--terracotta);
+}
+.animated-page .hero h1::after {
+  content: "";
+  display: block;
+  width: 76px;
+  height: 4px;
+  margin: 1.25rem auto;
+  background: #e7b299;
+}
+.animated-page .hero .button.light,
+.animated-page .home-hero .button {
+  background: var(--terracotta);
+  color: white;
+}
+.animated-page .hero .button.light:hover,
+.animated-page .home-hero .button:hover {
+  background: #693321;
+  color: white;
+}
+.home-hero h1 { color: #693321; }
+.home-hero-line { color: var(--terracotta); }
+.home-hero-visual::before { border-color: var(--terracotta); }
+.home-hero-thread { stroke: var(--terracotta); }
+.animated-page .reading-progress { background: var(--terracotta); }
+.animated-page .nav-botanical { color: var(--terracotta); }
