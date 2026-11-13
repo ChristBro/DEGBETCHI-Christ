@@ -715,7 +715,7 @@
   stroke-linejoin: round;
 }
 .footer-yarn { left: .4rem; }
-.footer-loom { right: .4rem; }
+.footer-spindle { right: .5rem; }
 .footer-socials { display: flex; gap: .5rem; margin-top: .8rem; }
 .footer-socials a {
   display: inline-flex;
@@ -748,4 +748,28 @@
 @media (max-width: 600px) {
   .footer-crafts svg { width: 32px; }
   .animated-page footer { padding-inline: 3rem; }
+}
+
+
+/* Compact closing section */
+.animated-page .cta {
+  padding-block: clamp(2rem, 4vw, 3rem);
+}
+.animated-page .cta .section-heading { margin-bottom: 1.3rem; }
+.animated-page footer { padding-top: 1.5rem; padding-bottom: .8rem; }
+.animated-page .footer-grid { gap: 1.5rem; }
+.animated-page .footer-grid h2 { margin-bottom: .7rem; }
+.animated-page .footer-grid p { margin-bottom: .65rem; }
+.animated-page .footer-links { gap: .1rem; }
+.animated-page .footer-bottom { margin-top: 1.2rem; padding-top: .7rem; }
+.footer-crafts .footer-spindle { width: clamp(25px, 2.7vw, 43px); top: 35%; }
+@media (prefers-reduced-motion: no-preference) {
+  .footer-crafts.is-visible .footer-spindle-body {
+    transform-origin: 50px 87px;
+    animation: footer-spin 4s ease-in-out 2;
+  }
+}
+@keyframes footer-spin {
+  35% { rotate: 12deg; }
+  70% { rotate: -9deg; }
 }
