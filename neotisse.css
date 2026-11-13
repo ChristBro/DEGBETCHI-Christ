@@ -371,3 +371,33 @@
 .home-hero-thread { stroke: var(--terracotta); }
 .animated-page .reading-progress { background: var(--terracotta); }
 .animated-page .nav-botanical { color: var(--terracotta); }
+
+/* Action buttons and secondary buttons. */
+.animated-page .button,
+.animated-page .hero .button.light,
+.animated-page .home-hero .button,
+.animated-page .cta .button,
+.neotisse-home .neotisse-feature .button,
+.neotisse-home .neotisse-promo .button {
+  background: var(--sun);
+  color: var(--ink);
+}
+.animated-page .button:hover,
+.animated-page .hero .button.light:hover,
+.animated-page .home-hero .button:hover,
+.animated-page .cta .button:hover,
+.neotisse-home .neotisse-feature .button:hover,
+.neotisse-home .neotisse-promo .button:hover {
+  background: #ffdf68;
+  color: var(--ink);
+}
+.home-hero-secondary {
+  display: inline-block;
+  padding: .85rem 1.4rem;
+  background: white;
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: .25rem;
+  text-decoration: none;
+}
+.home-hero-secondary:hover { background: #faf8f3; }
