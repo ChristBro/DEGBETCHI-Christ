@@ -613,3 +613,14 @@
   .neotisse-home #livre-or { grid-template-columns: 1fr; gap: 2rem; }
   .neotisse-home #livre-or .section-heading p { max-width: none; }
 }
+
+.animated-page .cta .button {
+  background: white;
+  color: var(--ink);
+  border: 1px solid #d8c8b5;
+}
+.animated-page .cta .button:hover,
+.animated-page .cta .button:focus-visible {
+  background: #faf8f3;
+  color: var(--ink);
+}
