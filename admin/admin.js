@@ -1,11 +1,35 @@
 const menuLinks = [...document.querySelectorAll('header nav a')];
 const sections = menuLinks.map((link) => document.getElementById(link.hash.slice(1)));
 const editor = document.querySelector('#content-editor');
+const tablist = document.querySelector('header nav');
+tablist.setAttribute('role', 'tablist');
+menuLinks.forEach((link, index) => {
+  link.id = 'tab-' + sections[index].id;
+  link.setAttribute('role', 'tab');
+  link.setAttribute('aria-controls', sections[index].id);
+  sections[index].setAttribute('role', 'tabpanel');
+  sections[index].setAttribute('aria-labelledby', link.id);
+  sections[index].tabIndex = 0;
+  link.addEventListener('keydown', (event) => {
+    let next;
+    if (event.key === 'ArrowRight') next = (index + 1) % menuLinks.length;
+    if (event.key === 'ArrowLeft') next = (index + menuLinks.length - 1) % menuLinks.length;
+    if (event.key === 'Home') next = 0;
+    if (event.key === 'End') next = menuLinks.length - 1;
+    if (next !== undefined) {
+      event.preventDefault();
+      menuLinks[next].click();
+      menuLinks[next].focus();
+    }
+  });
+});
 
 function showSection(id) {
   const current = sections.find((section) => section.id === id) || sections[0];
   sections.forEach((section, index) => {
     section.hidden = section !== current;
+    menuLinks[index].setAttribute('aria-selected', String(section === current));
+    menuLinks[index].tabIndex = section === current ? 0 : -1;
     if (section === current) menuLinks[index].setAttribute('aria-current', 'true');
     else menuLinks[index].removeAttribute('aria-current');
   });

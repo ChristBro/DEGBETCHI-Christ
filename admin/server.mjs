@@ -35,11 +35,7 @@ const groups = {
       ['quote', 'Avis', 'textarea', 2000, true],
     ],
   },
-  coordinates: {
-    label: 'Coordonnées', fixed: true,
-    fields: [['email', 'E-mail', 'email', 200, true], ['city', 'Ville', 'text', 160, true],
-      ['instagram', 'Lien Instagram', 'url', 600]],
-  },
+
 };
 const defaults = JSON.parse(readFileSync(new URL('./defaults.json', import.meta.url), 'utf8'));
 
@@ -69,7 +65,7 @@ function render(data, token, version, message, messages) {
     '<section id="' + group + '"><h2>' + label + '</h2><div class="records">' + data[group].map((row) => fieldsFor(group, row)).join('')
     + '</div>' + (fixed ? '' : '<button type="button" class="add">Ajouter ' + singular + '</button><template>' + fieldsFor(group) + '</template>') + '</section>').join('');
   const menu = [['events', 'Rendez-vous'], ['services', 'Prestations'], ['partners', 'Partenaires'],
-    ['reviews', 'Livre d’or'], ['messages', 'Messages reçus'], ['coordinates', 'Coordonnées']];
+    ['reviews', 'Livre d’or'], ['messages', 'Messages reçus']];
   const links = menu.map(([id, label]) => '<a href="#' + id + '">' + label + '</a>').join('');
   const inbox = messages.map((item) => '<article><h3>' + escape(item.subject) + '</h3><p>' + escape(item.email)
     + ' · ' + escape(new Date(item.date).toLocaleString('fr-FR')) + '</p><p class="message-body">' + escape(item.body) + '</p>'
@@ -192,7 +188,7 @@ export function adminServer(contentPath) {
       let data;
       try {
         const current = { ...defaults, ...JSON.parse(source.trim().slice(prefix.length, -1)) };
-        data = Object.fromEntries(Object.keys(groups).map((key) => [key, readRecords(form, key, current[key])]));
+        data = { ...current, ...Object.fromEntries(Object.keys(groups).map((key) => [key, readRecords(form, key, current[key])])) };
       } catch (error) {
         return send(400, 'text/plain', error.message + ' Revenez au formulaire pour corriger la saisie.');
       }
