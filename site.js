@@ -261,3 +261,117 @@ if (textile) {
   if ('ResizeObserver' in window) new ResizeObserver(scheduleTextile).observe(document.body);
   syncTextile();
 }
+
+const subjectSelect = document.querySelector('#contact-form select[name="subject"]');
+if (subjectSelect) {
+  const picker = document.createElement('div');
+  picker.className = 'subject-picker';
+  const trigger = document.createElement('button');
+  trigger.type = 'button';
+  trigger.className = 'subject-trigger';
+  trigger.id = 'subject-trigger';
+  trigger.setAttribute('aria-haspopup', 'listbox');
+  trigger.setAttribute('aria-expanded', 'false');
+  trigger.setAttribute('aria-controls', 'subject-options');
+  trigger.setAttribute('aria-labelledby', 'subject-label subject-value');
+  const value = document.createElement('span');
+  value.id = 'subject-value';
+  const arrow = document.createElement('span');
+  arrow.className = 'subject-arrow';
+  arrow.textContent = '⌄';
+  arrow.setAttribute('aria-hidden', 'true');
+  trigger.append(value, arrow);
+  const list = document.createElement('div');
+  list.id = 'subject-options';
+  list.className = 'subject-options';
+  list.setAttribute('role', 'listbox');
+  list.setAttribute('aria-labelledby', 'subject-label');
+  list.hidden = true;
+  const label = document.querySelector('label[for="subject"]');
+  label.id = 'subject-label';
+  label.htmlFor = trigger.id;
+  const options = [...subjectSelect.options].filter((option) => option.value).map((option, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.setAttribute('role', 'option');
+    button.tabIndex = -1;
+    button.textContent = option.textContent;
+    button.dataset.value = option.value;
+    button.style.setProperty('--choice', index);
+    button.addEventListener('click', () => {
+      subjectSelect.value = option.value;
+      subjectSelect.dispatchEvent(new Event('change', { bubbles: true }));
+      closePicker(true);
+    });
+    list.append(button);
+    return button;
+  });
+
+  function syncSubject() {
+    value.textContent = subjectSelect.selectedOptions[0]?.textContent || 'Choisir un motif';
+    options.forEach((button) => button.setAttribute('aria-selected', String(button.dataset.value === subjectSelect.value)));
+    trigger.removeAttribute('aria-invalid');
+  }
+  function closePicker(focus) {
+    list.hidden = true;
+    trigger.setAttribute('aria-expanded', 'false');
+    if (focus) trigger.focus();
+  }
+  function openPicker(index) {
+    list.hidden = false;
+    trigger.setAttribute('aria-expanded', 'true');
+    const selected = options.findIndex((button) => button.dataset.value === subjectSelect.value);
+    options[index ?? Math.max(0, selected)].focus();
+  }
+  trigger.addEventListener('click', () => {
+    if (list.hidden) openPicker();
+    else closePicker(false);
+  });
+  trigger.addEventListener('keydown', (event) => {
+    if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
+      event.preventDefault();
+      openPicker(event.key === 'ArrowUp' ? options.length - 1 : 0);
+    }
+  });
+  list.addEventListener('keydown', (event) => {
+    const current = options.indexOf(document.activeElement);
+    let next;
+    if (event.key === 'ArrowDown') next = (current + 1) % options.length;
+    if (event.key === 'ArrowUp') next = (current + options.length - 1) % options.length;
+    if (event.key === 'Home') next = 0;
+    if (event.key === 'End') next = options.length - 1;
+    if (next !== undefined) {
+      event.preventDefault();
+      options[next].focus();
+    } else if (event.key === 'Escape') {
+      event.preventDefault();
+      closePicker(true);
+    } else if (event.key.length === 1) {
+      const match = options.find((button) => button.textContent.toLocaleLowerCase().startsWith(event.key.toLocaleLowerCase()));
+      if (match) { event.preventDefault(); match.focus(); }
+    }
+  });
+  document.addEventListener('click', (event) => {
+    if (!picker.contains(event.target)) closePicker(false);
+  });
+  picker.addEventListener('focusout', (event) => {
+    if (!picker.contains(event.relatedTarget)) closePicker(false);
+  });
+  subjectSelect.addEventListener('change', syncSubject);
+  subjectSelect.addEventListener('invalid', (event) => {
+    event.preventDefault();
+    trigger.setAttribute('aria-invalid', 'true');
+    trigger.focus();
+    openPicker();
+  });
+  subjectSelect.form.addEventListener('reset', () => {
+    setTimeout(syncSubject, 0);
+    closePicker(false);
+  });
+  subjectSelect.classList.add('subject-native');
+  subjectSelect.tabIndex = -1;
+  subjectSelect.setAttribute('aria-hidden', 'true');
+  subjectSelect.after(picker);
+  picker.append(trigger, list);
+  syncSubject();
+}
