@@ -559,3 +559,57 @@
 }
 
 .neotisse-home .neotisse-promo h2 { margin-bottom: 2.5rem; }
+
+/* Livre d’or */
+.neotisse-home #livre-or {
+  display: grid;
+  grid-template-columns: minmax(180px, .7fr) minmax(0, 1.6fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+  background: #faf6ee;
+  border-top: 1px solid #e5d9c8;
+}
+.neotisse-home #livre-or .section-heading {
+  margin: 0;
+  text-align: left;
+}
+.neotisse-home #livre-or h2 {
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  color: var(--terracotta);
+  line-height: 1.05;
+}
+.neotisse-home #livre-or .section-heading p {
+  max-width: 24ch;
+  font-size: .9rem;
+  color: #756958;
+}
+#livre-or .guestbook {
+  display: block;
+  min-width: 0;
+}
+#livre-or .guestbook figure {
+  margin: 0;
+  padding: 1.8rem 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+#livre-or .guestbook figure:first-child { padding-top: 0; }
+#livre-or .guestbook figure + figure { border-top: 1px solid #d9cab6; }
+#livre-or .guestbook blockquote {
+  max-width: 42ch;
+  margin: 0 0 1.1rem;
+  color: #44392c;
+  font: 400 clamp(1.35rem, 2.1vw, 1.9rem)/1.5 Georgia, serif;
+  letter-spacing: -.015em;
+}
+#livre-or .guestbook figcaption {
+  color: #77634d;
+  font-size: .85rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+@media (max-width: 700px) {
+  .neotisse-home #livre-or { grid-template-columns: 1fr; gap: 2rem; }
+  .neotisse-home #livre-or .section-heading p { max-width: none; }
+}
