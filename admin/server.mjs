@@ -73,9 +73,9 @@ function render(data, token, version, message, messages) {
     + '"><input type="hidden" name="id" value="' + escape(item.id) + '"><button class="remove">Retirer le message</button></form></article>').join('');
   return `<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Administration · Néotisse</title><link rel="stylesheet" href="/admin.css"><script src="/admin.js" defer></script></head>
-  <body><header><div><p>NÉOTISSE / ADMINISTRATION LOCALE</p><h1>Contenus du site</h1><p>Gérez les rendez-vous et les avis affichés sur le site.</p></div>
+  <body><header><a class="admin-brand" href="/apercu/index.html" aria-label="Voir le site Néotisse"><img src="/apercu/assets/logo.png" alt="Néotisse" width="130" height="100"></a>
   <nav aria-label="Sections">${links}</nav></header>
-  <main><p>Après avoir enregistré, ouvrez <a href="/apercu/index.html#livre-or" target="_blank" rel="noopener">le livre d’or sur le site local ↗</a>. Pour mettre à jour la version en ligne, partagez le fichier de contenu sur GitHub et redéployez le site.</p><p class="feedback" role="status">${escape(message)}</p>
+  <main><h1>Administration</h1><p>Après avoir enregistré, ouvrez <a href="/apercu/index.html#livre-or" target="_blank" rel="noopener">le livre d’or sur le site local ↗</a>. Pour mettre à jour la version en ligne, partagez le fichier de contenu sur GitHub et redéployez le site.</p><p class="feedback" role="status">${escape(message)}</p>
   <form id="content-editor" method="post" action="/"><input type="hidden" name="token" value="${token}"><input type="hidden" name="revision" value="${version}">
   ${sections}<div class="save"><span>Les modifications sont enregistrées dans le projet local.</span><button type="submit">Enregistrer</button></div></form><section id="messages"><h2>Messages reçus</h2><p>Messages envoyés depuis le formulaire de l’aperçu local.</p>${inbox || "<p>Aucun message pour le moment.</p>"}</section></main></body></html>`;
 }
