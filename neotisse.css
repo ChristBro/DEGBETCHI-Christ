@@ -275,3 +275,34 @@
   .home-hero-visual { max-width: 520px; }
   .home-hero-thread { left: -.5rem; bottom: 0; }
 }
+
+.neotisse-catalogue .cards article {
+  display: flex;
+  flex-direction: column;
+}
+.neotisse-catalogue .cards article > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+.neotisse-catalogue .cards h3 { min-height: 2.7em; }
+.neotisse-catalogue .cards .text-link { margin-top: auto; }
+@supports (grid-template-rows: subgrid) {
+  .neotisse-catalogue .cards { row-gap: 0; }
+  .neotisse-catalogue .cards article {
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+  }
+  .neotisse-catalogue .cards article > div {
+    display: grid;
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+    justify-items: center;
+    align-items: start;
+    padding-block: 1.25rem;
+  }
+  .neotisse-catalogue .cards h3 { min-height: 0; }
+  .neotisse-catalogue .cards .text-link { margin-top: 0; align-self: end; }
+}
