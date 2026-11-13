@@ -773,3 +773,11 @@
   35% { rotate: 12deg; }
   70% { rotate: -9deg; }
 }
+
+@media (min-width: 1400px) {
+  .footer-yarn { left: calc((100% - 1190px) / 4 - 50px); }
+  .footer-spindle { right: calc((100% - 1190px) / 4 - 25px); }
+  .footer-crafts svg { width: 100px; top: 30%; }
+  .footer-crafts .footer-spindle { width: 50px; top: 25%; }
+}
+body.footer-in-view .textile-scroll { visibility: hidden; }
