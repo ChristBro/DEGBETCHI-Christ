@@ -487,3 +487,14 @@ document.querySelectorAll('[data-cookie-settings]').forEach((button) => {
     cookieBanner.querySelector('button').focus({ preventScroll: true });
   });
 });
+
+const footerCrafts = document.querySelector('.footer-crafts');
+if (footerCrafts && 'IntersectionObserver' in window) {
+  const craftObserver = new IntersectionObserver(([entry], observer) => {
+    if (entry.isIntersecting) {
+      footerCrafts.classList.add('is-visible');
+      observer.disconnect();
+    }
+  }, { threshold: 0.4 });
+  craftObserver.observe(footerCrafts);
+}
