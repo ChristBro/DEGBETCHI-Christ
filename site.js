@@ -498,11 +498,3 @@ if (footerCrafts && 'IntersectionObserver' in window) {
   }, { threshold: 0.4 });
   craftObserver.observe(footerCrafts);
 }
-
-const siteFooter = document.querySelector('footer');
-if (siteFooter && 'IntersectionObserver' in window) {
-  const footerVisibility = new IntersectionObserver(([entry]) => {
-    document.body.classList.toggle('footer-in-view', entry.isIntersecting);
-  }, { threshold: 0.15 });
-  footerVisibility.observe(siteFooter);
-}
