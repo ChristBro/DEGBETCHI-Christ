@@ -8,9 +8,9 @@
 [hidden] { display: none !important; }
 body { margin: 0; }
 header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr) 130px;
   align-items: center;
-  justify-content: space-between;
   gap: 2rem;
   padding: 1rem clamp(1rem, 3vw, 3rem);
   background: #f3efe3;
@@ -23,7 +23,7 @@ h1 { font: 400 1.1rem/1.5 "Segoe UI", Arial, sans-serif; color: #746452; margin:
 nav {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   gap: .5rem clamp(1.5rem, 3vw, 3.5rem);
 }
@@ -96,7 +96,7 @@ button:hover { background: #ffdf68; }
 .message-body { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.7; }
 @media (max-width: 600px) {
   header { padding-top: 1.5rem; }
-  header { flex-direction: column; align-items: flex-start; gap: .5rem; }
-  nav { justify-content: flex-start; gap: .4rem 1.5rem; }
+  header { display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+  nav { justify-content: center; gap: .4rem 1.5rem; }
   .records { gap: 1.5rem; }
 }

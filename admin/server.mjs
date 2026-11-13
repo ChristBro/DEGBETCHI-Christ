@@ -127,7 +127,7 @@ export function adminServer(contentPath) {
       res.writeHead(code, { 'Content-Type': type + '; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff',
         'Content-Security-Policy': preview
           ? "default-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self' mailto:; frame-ancestors 'none'"
-          : "default-src 'none'; script-src 'self'; style-src 'self'; form-action 'self'; frame-ancestors 'none'" });
+          : "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self'; form-action 'self'; frame-ancestors 'none'" });
       res.end(body);
     };
     if (!/^127\.0\.0\.1:\d+$/.test(req.headers.host ?? '')) return send(403, 'text/plain', 'Accès local uniquement.');
