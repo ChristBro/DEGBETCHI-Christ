@@ -98,6 +98,8 @@
     <p>Indiquez le public, le nombre de participants, le lieu, la période et la technique que vous souhaitez découvrir.</p>
     <a class="text-link" href="mailto:asso.neotisse@gmail.com">asso.neotisse@gmail.com</a><p><a href="tel:+33648655816">06 48 65 58 16</a></p></div>
     <form id="contact-form" action="/messages/envoyer" method="post">
+      <label for="first-name">Prénom</label><input id="first-name" name="firstName" type="text" autocomplete="given-name" maxlength="100" required>
+      <label for="last-name">Nom</label><input id="last-name" name="lastName" type="text" autocomplete="family-name" maxlength="100" required>
       <label for="reply-email">Votre adresse e-mail</label><input id="reply-email" name="email" type="email" maxlength="200" required>
       <label for="subject">Motif de la demande</label><select id="subject" name="subject" required><option value="">Choisir un motif</option><option>Rendez-vous</option><option>Atelier / intervention</option><option>Devis</option><option>Autre demande</option></select>
       <label for="body">Message</label><textarea id="body" name="body" rows="7" required></textarea>

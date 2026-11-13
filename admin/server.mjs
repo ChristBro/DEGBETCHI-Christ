@@ -67,7 +67,7 @@ function render(data, token, version, message, messages) {
   const menu = [['events', 'Rendez-vous'], ['services', 'Prestations'], ['partners', 'Partenaires'],
     ['reviews', 'Livre d’or'], ['messages', 'Messages reçus']];
   const links = menu.map(([id, label]) => '<a href="#' + id + '">' + label + '</a>').join('');
-  const inbox = messages.map((item) => '<article><h3>' + escape(item.subject) + '</h3><p>' + escape(item.email)
+  const inbox = messages.map((item) => '<article><h3>' + escape(item.subject) + '</h3><p>' + escape([item.firstName, item.lastName, item.email].filter(Boolean).join(' · '))
     + ' · ' + escape(new Date(item.date).toLocaleString('fr-FR')) + '</p><p class="message-body">' + escape(item.body) + '</p>'
     + '<form method="post" action="/messages/retirer"><input type="hidden" name="token" value="' + token
     + '"><input type="hidden" name="id" value="' + escape(item.id) + '"><button class="remove">Retirer le message</button></form></article>').join('');
@@ -166,14 +166,17 @@ export function adminServer(contentPath) {
       }
       const form = new URLSearchParams(body);
       if (req.url === '/messages/envoyer') {
+        const firstName = form.get('firstName')?.trim();
+        const lastName = form.get('lastName')?.trim();
         const email = form.get('email')?.trim();
         const subject = form.get('subject')?.trim();
         const message = form.get('body')?.trim();
-        if (!email || email.length > 200 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        if (!firstName || firstName.length > 100 || !lastName || lastName.length > 100
+          || !email || email.length > 200 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
           || !subject || subject.length > 160 || !message || message.length > 4000) {
-          return send(400, 'text/plain', 'Vérifiez votre e-mail, le motif et le message.');
+          return send(400, 'text/plain', 'Vérifiez vos nom et prénom, votre e-mail, le motif et le message.');
         }
-        saveInbox([{ id: randomBytes(12).toString('hex'), date: new Date().toISOString(), email, subject, body: message }, ...inbox()]);
+        saveInbox([{ id: randomBytes(12).toString('hex'), date: new Date().toISOString(), firstName, lastName, email, subject, body: message }, ...inbox()]);
         return send(201, 'text/plain', 'Message reçu.');
       }
       if (form.get('token') !== token) return send(403, 'text/plain', 'Rechargez le back-office avant d’enregistrer.');
