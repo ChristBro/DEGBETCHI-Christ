@@ -57,7 +57,7 @@ window.neotisseContent = {
   ],
   "coordinates": [
     {
-      "email": "contact@neotisse.org",
+      "email": "asso.neotisse@gmail.com",
       "city": "Montpellier, France",
       "instagram": "https://www.instagram.com/neotisse.asso/"
     }

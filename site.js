@@ -105,7 +105,7 @@ if (content) {
   const coordinates = content.coordinates?.[0];
   if (coordinates) {
     document.querySelectorAll('[data-contact-city]').forEach((place) => { place.textContent = coordinates.city; });
-    document.querySelectorAll('a[href="mailto:contact@neotisse.org"]').forEach((link) => {
+    document.querySelectorAll('a[href="mailto:asso.neotisse@gmail.com"]').forEach((link) => {
       link.href = 'mailto:' + coordinates.email;
       link.textContent = coordinates.email;
     });
@@ -407,3 +407,59 @@ if (subjectSelect) {
   picker.append(trigger, list);
   syncSubject();
 }
+
+const cookieKey = 'neotisse-cookie-choice';
+const cookieLifetime = 183 * 24 * 60 * 60 * 1000;
+const cookieBanner = document.createElement('aside');
+cookieBanner.className = 'cookie-banner';
+cookieBanner.setAttribute('aria-label', 'Vos choix de confidentialité');
+cookieBanner.hidden = true;
+cookieBanner.innerHTML = '<div><h2>Vos choix de confidentialité</h2><p>Néotisse mémorise votre choix pour cette bannière. Aucun cookie publicitaire ni outil de mesure d’audience n’est activé.</p><a href="gestion-des-cookies.html">En savoir plus sur les cookies</a></div>'
+  + '<div class="cookie-actions"><button type="button" class="button" data-choice="accepted">Tout accepter</button><button type="button" class="button" data-choice="refused">Tout refuser</button><button type="button" class="cookie-details-toggle" aria-expanded="false" aria-controls="cookie-details">Personnaliser</button></div>'
+  + '<div id="cookie-details" hidden><p><strong>Mémorisation de votre choix</strong> — conservée sur cet appareil pendant six mois.</p><p><strong>Cookies facultatifs</strong> — aucun service facultatif actuellement activé. Vous pouvez accepter ou refuser ci-dessus.</p></div>';
+document.body.append(cookieBanner);
+let savedChoice;
+try {
+  savedChoice = JSON.parse(localStorage.getItem(cookieKey));
+} catch {
+  savedChoice = null;
+}
+function validCookieChoice(choice) {
+  return ['accepted', 'refused'].includes(choice?.value)
+    && Number.isFinite(choice.savedAt)
+    && Date.now() >= choice.savedAt
+    && Date.now() - choice.savedAt < cookieLifetime;
+}
+function showCookieStatus() {
+  const status = document.querySelector('.cookie-status');
+  if (status) status.textContent = validCookieChoice(savedChoice)
+    ? (savedChoice.value === 'accepted' ? 'Votre choix actuel : tout accepter.' : 'Votre choix actuel : tout refuser.')
+    : 'Aucun choix mémorisé.';
+}
+cookieBanner.hidden = validCookieChoice(savedChoice);
+showCookieStatus();
+cookieBanner.querySelectorAll('[data-choice]').forEach((button) => {
+  button.addEventListener('click', () => {
+    savedChoice = { value: button.dataset.choice, savedAt: Date.now() };
+    try {
+      localStorage.setItem(cookieKey, JSON.stringify(savedChoice));
+    } catch {
+      // The choice applies to this page when browser storage is unavailable.
+    }
+    cookieBanner.hidden = true;
+    showCookieStatus();
+    document.querySelector('[data-cookie-settings]')?.focus({ preventScroll: true });
+  });
+});
+const detailsToggle = cookieBanner.querySelector('.cookie-details-toggle');
+detailsToggle.addEventListener('click', () => {
+  const details = cookieBanner.querySelector('#cookie-details');
+  details.hidden = !details.hidden;
+  detailsToggle.setAttribute('aria-expanded', String(!details.hidden));
+});
+document.querySelectorAll('[data-cookie-settings]').forEach((button) => {
+  button.addEventListener('click', () => {
+    cookieBanner.hidden = false;
+    cookieBanner.querySelector('button').focus({ preventScroll: true });
+  });
+});

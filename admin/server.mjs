@@ -140,7 +140,7 @@ export function adminServer(contentPath) {
         html: 'text/html', css: 'text/css', js: 'application/javascript',
         jpg: 'image/jpeg', png: 'image/png', webp: 'image/webp',
       };
-      const allowed = /^(?:index|a-propos|nos-actions|agenda|services|contact|mentions-legales|politique-de-confidentialite)\.html$|^(?:styles|neotisse|page-motion)\.css$|^(?:site|content)\.js$|^assets\/(?:partenaires\/)?[a-z0-9-]+\.(?:jpg|png|webp)$/;
+      const allowed = /^(?:index|a-propos|nos-actions|agenda|services|contact|mentions-legales|politique-de-confidentialite|gestion-des-cookies)\.html$|^(?:styles|neotisse|page-motion)\.css$|^(?:site|content)\.js$|^assets\/(?:partenaires\/)?[a-z0-9-]+\.(?:jpg|png|webp)$/;
       if (!allowed.test(file)) return send(404, 'text/plain', 'Page introuvable.');
       try {
         const path = file === 'content.js' ? contentPath : new URL('../' + file, import.meta.url);
