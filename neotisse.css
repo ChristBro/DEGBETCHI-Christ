@@ -401,3 +401,69 @@
   text-decoration: none;
 }
 .home-hero-secondary:hover { background: #faf8f3; }
+
+/* Contact form */
+.animated-page .contact {
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+  background: linear-gradient(135deg, #fff 40%, #faf4e9);
+}
+.animated-page .contact > div { max-width: 34rem; }
+.animated-page .contact > div h2 { color: var(--terracotta); }
+.animated-page .contact form {
+  position: relative;
+  min-width: 0;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border: 1px solid #e9dac8;
+  border-top: 4px solid var(--terracotta);
+  border-radius: 1.25rem;
+  background: #fffdfa;
+  box-shadow: 0 16px 44px #563a2010;
+  gap: .6rem;
+}
+.animated-page .contact form label {
+  margin-top: .4rem;
+  color: #653724;
+  font-size: .95rem;
+  font-weight: 600;
+}
+.animated-page .contact form :is(input, select, textarea) {
+  width: 100%;
+  min-width: 0;
+  padding: .85rem 1rem;
+  border: 1px solid #d8c8b5;
+  border-radius: .65rem;
+  background: white;
+  color: var(--ink);
+  font: inherit;
+  line-height: 1.5;
+}
+.animated-page .contact form textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+.animated-page .contact form :is(input, select, textarea):hover { border-color: #aa7c62; }
+.animated-page .contact form :is(input, select, textarea):focus {
+  border-color: var(--terracotta);
+  outline: 2px solid #8e402b;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px #8e402b12;
+}
+.animated-page .contact form .note {
+  margin: .6rem 0;
+  color: #6e6253;
+  font-size: .85rem;
+  text-align: center;
+}
+.animated-page .contact form .button {
+  margin-top: .2rem;
+  border-radius: 999px;
+  min-height: 48px;
+  padding-inline: clamp(1rem, 4vw, 2.75rem);
+  font-weight: 600;
+  white-space: normal;
+}
+.animated-page .contact form .button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
