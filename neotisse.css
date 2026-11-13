@@ -1,6 +1,6 @@
 .animated-page {
   --ink:#352d1b; --accent:#796020; --light:#f5f3ee; --border:#e3dfd7;
-  --sun:#ffdc52; --cherry:#ffdc52; --lavender:#eee9df; --forest:#ffdc52; --grass:#f3ecda;
+  --sun:#ffe88a; --cherry:#ffe88a; --lavender:#eee9df; --forest:#ffe88a; --grass:#f3ecda;
   --serif:"Bodoni MT", Didot, Georgia, serif;
   font-family:Arial, Helvetica, sans-serif;
 }
@@ -29,7 +29,7 @@
 .animated-page :is(main,section,.atelier)[id], .events article[id] { scroll-margin-top:10rem; }
 .animated-page .reading-progress { background:#ac8c45; }
 .animated-page .button { background:var(--ink); padding:.85rem clamp(1.4rem,3.2vw,2.8rem); letter-spacing:0; font-weight:500; text-transform:uppercase; }
-.animated-page .button:hover { background:#efc438; }
+.animated-page .button:hover { background:#ffdf68; }
 .animated-page .button.light, .animated-page .cta .button { background:white; color:#171717; }
 .animated-page .button.light:hover, .animated-page .cta .button:hover { background:#f4efe2; }
 .animated-page .hero .button::after { content:none; }
@@ -49,7 +49,7 @@
 .neotisse-home .neotisse-feature .button:hover { background:#f4efe2; }
 .neotisse-home .neotisse-promo { color:var(--ink); background:var(--light); }
 .neotisse-home .neotisse-promo .button { color:white; background:var(--ink); }
-.neotisse-home .neotisse-promo .button:hover { background:#efc438; }
+.neotisse-home .neotisse-promo .button:hover { background:#ffdf68; }
 .neotisse-catalogue .section-heading h2, .neotisse-home #livre-or h2 { font-size:clamp(1.8rem,3vw,36px); }
 .neotisse-catalogue .section-heading h2 { text-transform:uppercase; }
 .neotisse-catalogue .cards article { border:0; text-align:center; }
@@ -317,7 +317,7 @@
   color: var(--ink);
 }
 .animated-page .button:hover,
-.neotisse-home .neotisse-promo .button:hover { background: #efc438; color: var(--ink); }
+.neotisse-home .neotisse-promo .button:hover { background: #ffdf68; color: var(--ink); }
 .animated-page .button.light,
 .animated-page .cta .button,
 .neotisse-home .neotisse-feature .button { background: white; color: var(--ink); }
@@ -326,5 +326,5 @@
 .animated-page footer a:hover,
 .animated-page footer a:focus-visible { color: #674400; }
 .animated-page .footer-bottom { border-top-color: #b8932e; }
-.calendar-days a { background: #ffdc52; color: #352d1b; }
-.calendar-days a:hover { background: #efc438; color: #352d1b; }
+.calendar-days a { background: #ffe88a; color: #352d1b; }
+.calendar-days a:hover { background: #ffdf68; color: #352d1b; }
