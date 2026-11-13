@@ -61,7 +61,7 @@ img { display: block; max-width: 100%; }
 .cta { text-align: center; background: #ead9c5; }
 .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
 .contact form { display: grid; gap: .5rem; align-content: start; }
-.contact form .button { justify-self: start; }
+.contact form .button { justify-self: center; }
 label { font-weight: 600; }
 select, textarea { font: inherit; color: var(--ink); background: white; border: 1px solid #a28a78; padding: .55rem; max-width: 100%; }
 .month-control { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .8rem; margin-bottom: 1.5rem; }
