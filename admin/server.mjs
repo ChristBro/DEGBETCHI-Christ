@@ -19,8 +19,8 @@ const groups = {
     ],
   },
   services: {
-    label: 'Prestations', fixed: true,
-    fields: [['title', 'Titre', 'text', 160, true], ['description', 'Description', 'textarea', 2000, true]],
+    label: 'Prestations', singular: 'une prestation',
+    fields: [['title', 'Titre', 'text', 160, true], ['slug', 'Identifiant unique (ex. atelier-filage)', 'text', 100, true], ['description', 'Description', 'textarea', 2000, true], ['image', 'Photo dans assets (facultatif)', 'text', 100]],
   },
   partners: {
     label: 'Partenaires', singular: 'un partenaire',
@@ -102,6 +102,7 @@ function readRecords(form, group, current) {
         throw new Error('Le lien doit être une adresse HTTP ou HTTPS.');
       }
       if (type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) throw new Error('Adresse e-mail invalide.');
+      if (key === 'slug' && !/^[a-z][a-z0-9-]*$/.test(value)) throw new Error('Identifiant invalide : lettres minuscules, chiffres et tirets uniquement.');
       if (key === 'image' && value && !/^[a-z0-9-]+\.(?:jpg|png|webp)$/.test(value)) throw new Error('Nom du fichier logo invalide.');
       record[key] = value;
     });
@@ -189,6 +190,7 @@ export function adminServer(contentPath) {
       try {
         const current = { ...defaults, ...JSON.parse(source.trim().slice(prefix.length, -1)) };
         data = { ...current, ...Object.fromEntries(Object.keys(groups).map((key) => [key, readRecords(form, key, current[key])])) };
+        if (new Set(data.services.map((service) => service.slug)).size !== data.services.length) throw new Error('Chaque prestation doit avoir un identifiant unique.');
       } catch (error) {
         return send(400, 'text/plain', error.message + ' Revenez au formulaire pour corriger la saisie.');
       }

@@ -28,20 +28,63 @@ if (content) {
     element.textContent = value;
     return element;
   };
-  content.services?.forEach((service) => {
-    const detail = document.getElementById(service.slug);
-    if (detail?.classList.contains('atelier')) {
-      detail.querySelector('h2').textContent = service.title;
-      detail.querySelector('.split > div > p').textContent = service.description;
-      const shortcut = document.querySelector('.atelier-index a[href="#' + service.slug + '"]');
-      if (shortcut) shortcut.textContent = shortcut.textContent.split(' · ')[0] + ' · ' + service.title;
+  if (content.services) {
+    const servicePhoto = (service) => {
+      const image = document.createElement('img');
+      image.src = 'assets/' + (service.image || 'ceintures.jpg');
+      image.alt = service.title;
+      image.loading = 'lazy';
+      return image;
+    };
+    const catalogue = document.querySelector('.neotisse-catalogue .cards');
+    const shortcuts = document.querySelector('.atelier-index');
+    const oldDetails = [...document.querySelectorAll('.atelier')];
+    const detailParent = oldDetails[0]?.parentElement || document.querySelector('#ateliers')?.parentElement;
+    const marker = oldDetails[0] || document.querySelector('#ateliers')?.nextElementSibling;
+    catalogue?.replaceChildren();
+    shortcuts?.replaceChildren();
+    content.services.forEach((service, index) => {
+      if (catalogue) {
+        const card = document.createElement('article');
+        const copy = document.createElement('div');
+        const link = make('a', 'Découvrir l’atelier ↗');
+        link.className = 'text-link';
+        link.href = 'services.html#' + service.slug;
+        copy.append(make('h3', service.title), make('p', service.description), link);
+        card.append(servicePhoto(service), copy);
+        catalogue.append(card);
+      }
+      if (shortcuts) {
+        const link = make('a', String(index + 1).padStart(2, '0') + ' · ' + service.title);
+        link.href = '#' + service.slug;
+        shortcuts.append(link);
+      }
+      if (detailParent) {
+        const wrapper = document.createElement('div');
+        wrapper.id = service.slug;
+        wrapper.className = 'atelier';
+        const section = document.createElement('section');
+        section.className = 'split' + (index % 2 ? ' reverse' : '');
+        const copy = document.createElement('div');
+        const link = make('a', 'Demander un devis');
+        link.className = 'button';
+        link.href = 'contact.html?motif=devis';
+        copy.append(make('h2', service.title), make('p', service.description), link);
+        section.append(servicePhoto(service), copy);
+        wrapper.append(section);
+        detailParent.insertBefore(wrapper, marker);
+      }
+    });
+    oldDetails.forEach((detail) => detail.remove());
+    if (!content.services.length) {
+      catalogue?.append(make('p', 'Les prochains ateliers seront annoncés ici.'));
+      shortcuts?.append(make('p', 'Aucune prestation annoncée pour le moment.'));
     }
-    const card = document.querySelector('.neotisse-catalogue a[href="services.html#' + service.slug + '"]')?.closest('article');
-    if (card) {
-      card.querySelector('h3').textContent = service.title;
-      card.querySelector('p').textContent = service.description;
+    if (shortcuts && location.hash) {
+      const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if (target?.classList.contains('atelier')) requestAnimationFrame(() => target.scrollIntoView());
     }
-  });
+  }
   if (content.partners) {
     document.querySelectorAll('.partner-logos').forEach((list) => {
       list.replaceChildren(...content.partners.map((partner, index) => {
