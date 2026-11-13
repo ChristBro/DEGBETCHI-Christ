@@ -226,7 +226,7 @@
 }
 .home-hero-summary { color: #454237; max-width: 38ch; margin-bottom: 1.65rem; }
 .home-hero-links { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.4rem; }
-.animated-page .home-hero .button { background: var(--hero-rust); border-radius: .25rem; text-transform: none; font-size: 1.05rem; }
+.animated-page .home-hero .button { background: var(--hero-rust); border-radius: 999px; text-transform: none; font-size: 1.05rem; }
 .animated-page .home-hero .button:hover { background: #693321; }
 .home-hero-secondary { color: #454237; font-weight: 600; }
 .home-hero-visual { position: relative; min-width: 0; padding: 0 0 1rem 1rem; }
@@ -397,7 +397,7 @@
   background: white;
   color: var(--ink);
   border: 1px solid var(--border);
-  border-radius: .25rem;
+  border-radius: 999px;
   text-decoration: none;
 }
 .home-hero-secondary:hover { background: #faf8f3; }
