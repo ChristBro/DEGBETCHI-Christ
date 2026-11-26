@@ -437,7 +437,7 @@ if (subjectSelect) {
 
 const localAnalytics = location.hostname === '127.0.0.1' && location.pathname.startsWith('/apercu/');
 // Renseigner l'identifiant du flux Web GA4 dans cette constante avant le déploiement.
-const gaMeasurementId = '';
+const gaMeasurementId = 'G-X0CKCZBF1V';
 const publicGa = !localAnalytics && location.protocol === 'https:' && /^G-[A-Z0-9]+$/.test(gaMeasurementId);
 const cookieKey = localAnalytics ? 'neotisse-local-audience-choice' : publicGa ? 'neotisse-ga4-choice' : 'neotisse-cookie-choice';
 const cookieLifetime = 183 * 24 * 60 * 60 * 1000;
