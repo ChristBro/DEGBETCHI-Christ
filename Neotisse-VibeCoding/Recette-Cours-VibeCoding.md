@@ -10,8 +10,10 @@ Avec Node.js 22 ou plus récent, lancez `node admin/server.mjs` à la racine. Ou
 2. Avant choix, puis après un refus et une navigation, vérifiez l’absence de requête de mesure. Vérifiez la préférence dans le stockage local.
 3. Sur Gestion des cookies, acceptez la mesure. Vérifiez la première vue et un seul envoi par nouvelle page consultée. Ouvrez Agenda puis une fiche. Dans Payload, relevez page et event_id.
 4. Dans Contact, essayez un formulaire invalide, puis envoyez un message fictif avec test@example.test. Vérifiez l’arrivée dans Messages reçus et l’incrément dans Analytics après l’enregistrement.
-5. Actualisez Analytics et essayez 7, 30 et 90 jours. Vérifiez la source, le fuseau et la barre d’aujourd’hui. Le mode démo indique que ses chiffres sont fictifs.
+5. Actualisez Analytics et essayez 1 jour, 1 semaine, 1 mois et 1 an. Vérifiez la source, le fuseau et la barre d’aujourd’hui. Le mode démo indique que ses chiffres sont fictifs.
 6. Retirez votre accord dans Gestion des cookies, rechargez et naviguez. Vérifiez que les envois ont cessé.
+
+Les périodes correspondent aux 1, 7, 30 et 365 derniers jours, aujourd’hui inclus (Europe/Paris). La vue annuelle regroupe les pages vues par mois. Les données supprimées par l’ancienne limite de 90 jours ne sont pas récupérables.
 
 ## Tests automatisés
 `node --test admin/analytics.test.mjs`

@@ -82,7 +82,7 @@ test('Collecteur, consentement du formulaire, agrégats et limites', async (t) =
   assert.match((await request('/analytics')).text, /Pages vues<\/dt><dd>0/);
   const demo = await request('/analytics?days=90&mode=demo');
   assert.match(demo.text, /Données fictives/);
-  assert.match(demo.text, /<option selected>90<\/option>/);
+  assert.match(demo.text, /<option value="90" selected>90 jours<\/option>/);
   assert.match(demo.text, /Pages vues<\/dt><dd>[1-9]/);
   assert.match((await request('/analytics')).text, /Pages vues<\/dt><dd>0/);
   assert.equal((await request('/analytics', undefined, origin, 'example.test')).status, 403);
@@ -103,7 +103,7 @@ test('Collecteur, consentement du formulaire, agrégats et limites', async (t) =
   contact.set('analytics', '1');
   assert.equal((await request('/messages/envoyer', contact.toString())).status, 201);
   const filtered = await request('/analytics?days=30');
-  assert.match(filtered.text, /<option selected>30<\/option>/);
+  assert.match(filtered.text, /<option value="30" selected>1 mois<\/option>/);
   assert.match(filtered.text, /Pages vues<\/dt><dd>2/);
   assert.match(filtered.text, /Fiches agenda consultées<\/dt><dd>1/);
   assert.match(filtered.text, /Messages reçus<\/dt><dd>1/);
@@ -114,6 +114,17 @@ test('Collecteur, consentement du formulaire, agrégats et limites', async (t) =
   assert.doesNotMatch(readFileSync(join(dir, '.neotisse-analytics.local.json'), 'utf8'), /@|Essai fictif/);
   for (let index = 0; index < 111; index++) assert.equal((await request('/analytics/view', event)).status, 204);
   assert.equal((await request('/analytics/view', event)).status, 429);
+  const historical = new Date(Date.now() - 100 * 86_400_000).toISOString().slice(0, 10);
+  const storage = join(dir, '.neotisse-analytics.local.json');
+  const data = JSON.parse(readFileSync(storage, 'utf8'));
+  data[historical] = { pages: { 'index.html': 4 }, messages: 0 };
+  writeFileSync(storage, JSON.stringify(data));
+  for (const [days, label] of [[1, '1 jour'], [7, '1 semaine'], [30, '1 mois'], [365, '1 an']]) {
+    const report = await request('/analytics?days=' + days);
+    assert.ok(report.text.includes('<option value="' + days + '" selected>' + label));
+    assert.ok(report.text.includes('Pages vues</dt><dd>' + (days === 365 ? 6 : 2) + '</dd>'));
+    assert.ok(report.text.includes(days === 365 ? 'Pages vues par mois' : 'Pages vues par jour'));
+  }
   const confirmation = await request('/analytics/reset');
   const token = confirmation.text.match(/name="token" value="([^"]+)"/)[1];
   assert.match((await request('/analytics')).text, /<progress[^>]+max="1" value="1"/);

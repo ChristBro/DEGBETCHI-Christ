@@ -7,6 +7,9 @@ const pageLabels = new Map([
   ['politique-de-confidentialite.html', 'Confidentialité'], ['gestion-des-cookies.html', 'Cookies'],
 ]);
 const dayMs = 86_400_000;
+const retentionDays = 365;
+const periods = new Map([[1, '1 jour'], [7, '1 semaine'], [30, '1 mois'], [365, '1 an']]);
+const monthFormat = new Intl.DateTimeFormat('fr-FR', { month: 'short', year: 'numeric', timeZone: 'UTC' });
 const dateFormat = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'short', timeZone: 'UTC' });
 const localDay = new Intl.DateTimeFormat('sv-SE', { dateStyle: 'short', timeZone: 'Europe/Paris' });
 const number = new Intl.NumberFormat('fr-FR');
@@ -57,7 +60,7 @@ export function recordAnalytics(path, name, page, eventId, value = '') {
     sample[1] += 1;
   } else if (name === 'contact_success') counts.messages += 1;
   else increment(name === 'workshop' ? 'workshops' : 'hero', value);
-  const cutoff = new Date(Date.parse(today) - 89 * dayMs).toISOString().slice(0, 10);
+  const cutoff = new Date(Date.parse(today) - (retentionDays - 1) * dayMs).toISOString().slice(0, 10);
   for (const day of Object.keys(days)) if (day < cutoff) delete days[day];
   writeFileSync(path + '.tmp', JSON.stringify(days), { mode: 0o600 });
   renameSync(path + '.tmp', path);
@@ -82,11 +85,14 @@ function demoDay(date) {
 }
 
 export function analyticsPage(path, period, demo = false, workshopLabels = new Map(), reset = false) {
-  const ranges = [7, 30, 90];
-  const range = ranges.includes(Number(period)) ? Number(period) : 7;
+  const requested = Number(period);
+  const range = periods.has(requested) || requested === 90 ? requested : 7;
   const end = Date.parse(localDay.format(new Date()));
   const dates = Array.from({ length: range }, (_, index) => new Date(end - (range - index - 1) * dayMs));
-  const filter = ranges.map((value) => '<option' + (value === range ? ' selected' : '') + '>' + value + '</option>').join('');
+  const options = range === 90 ? [...periods, [90, '90 jours']] : [...periods];
+  const filter = options.map(([value, name]) => '<option value="' + value + '"' + (value === range ? ' selected' : '') + '>' + name + '</option>').join('');
+  const annual = range === retentionDays;
+  const chartLabel = annual ? 'Pages vues par mois' : 'Pages vues par jour';
   const modeLink = '/analytics?days=' + range + (demo ? '' : '&amp;mode=demo');
   let body;
   let status = 200;
@@ -131,20 +137,27 @@ export function analyticsPage(path, period, demo = false, workshopLabels = new M
     const ranked = pages.filter(([, value]) => value > 0).sort((a, b) => b[1] - a[1]);
     const pageRows = ranked.slice(0, 6).map(([label, value]) =>
       '<li><span>' + label + '</span><strong>' + number.format(value) + '</strong><meter min="0" max="' + ranked[0][1] + '" value="' + value + '" aria-label="' + label + '"></meter></li>').join('');
-    const bars = dates.map((date, index) => {
-      const label = dateFormat.format(date);
-      return '<li title="' + label + ' · ' + number.format(views[index]) + ' vues"><meter min="0" max="' + max
-        + '" value="' + views[index] + '" aria-label="' + label + '"></meter></li>';
-    }).join('');
+    const months = new Map();
+    if (annual) {
+      dates.forEach((date, index) => {
+        const month = monthFormat.format(date);
+        months.set(month, (months.get(month) ?? 0) + views[index]);
+      });
+    }
+    const points = annual ? [...months] : dates.map((date, index) => [dateFormat.format(date), views[index]]);
+    const chartMax = Math.max(1, ...points.map(([, value]) => value));
+    const bars = points.map(([label, value]) =>
+      '<li title="' + label + ' · ' + number.format(value) + ' vues"><meter min="0" max="' + chartMax
+      + '" value="' + value + '" aria-label="' + label + '"></meter></li>').join('');
     const kpis = [['Pages vues', total], ['Fiches agenda consultées', pages.find(([label]) => label === 'Fiche agenda')[1]],
       ['Messages reçus', messages], ['Pages différentes consultées', ranked.length]];
     body = `
       ${!demo && !total && !messages ? '<p class="analytics-empty">Aucune activité mesurée sur cette période. <a href="/apercu/gestion-des-cookies.html">Vérifier ou modifier le choix de mesure</a>, puis ouvrir une page de l’aperçu.</p>' : ''}
       <dl class="analytics-kpis">${kpis.map(([label, value]) => '<div><dt>' + label + '</dt><dd>' + number.format(value) + '</dd></div>').join('')}</dl>
       <div class="analytics-grid">
-        <section class="analytics-panel"><h2>Fréquentation quotidienne</h2><p>Pages vues par jour</p>
-          <ul class="analytics-chart" aria-label="Pages vues par jour">${bars}</ul>
-          <div class="analytics-axis"><span>${dateFormat.format(dates[0])}</span><span>${dateFormat.format(dates.at(-1))}</span></div>
+        <section class="analytics-panel"><h2>${annual ? 'Fréquentation mensuelle' : 'Fréquentation quotidienne'}</h2><p>${chartLabel}</p>
+          <ul class="analytics-chart" aria-label="${chartLabel}">${bars}</ul>
+          <div class="analytics-axis"><span>${points[0][0]}</span><span>${points.at(-1)[0]}</span></div>
         </section>
         <section class="analytics-panel"><h2>Pages les plus vues</h2><p>Les six premières de la période</p>
           ${pageRows ? '<ol class="analytics-ranking">' + pageRows + '</ol>' : '<p>Aucune vue enregistrée.</p>'}
@@ -171,7 +184,7 @@ export function analyticsPage(path, period, demo = false, workshopLabels = new M
       <div class="analytics-actions"><a href="/apercu/index.html">Ouvrir l’aperçu local</a><a class="analytics-demo" href="${modeLink}">${demo ? 'Revenir aux mesures locales' : 'Voir la démo'}</a></div>
     </div>
     <div class="analytics-toolbar"><p${demo ? ' class="analytics-demo-notice"' : ''}>${demo ? '<strong>Mode démo</strong> · Données fictives pour la présentation.' : 'Source : aperçu local de Néotisse, après accord.'}</p>
-      <form method="get" action="/analytics">${demo ? '<input type="hidden" name="mode" value="demo">' : ''}<label>Période en jours<select name="days">${filter}</select></label><button type="submit">Afficher</button></form>
+      <form method="get" action="/analytics">${demo ? '<input type="hidden" name="mode" value="demo">' : ''}<label>Période<select name="days">${filter}</select></label><button type="submit">Afficher</button></form>
     </div>
     ${reset && !demo ? '<p class="feedback" role="status">Les statistiques locales ont été réinitialisées.</p>' : ''}
     <aside class="analytics-panel analytics-consent"><strong>Pour être comptés, les visiteurs doivent accepter la mesure d’audience.</strong>
