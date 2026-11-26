@@ -188,7 +188,7 @@ export function analyticsPage(path, period, demo = false, workshopLabels = new M
     </div>
     ${reset && !demo ? '<p class="feedback" role="status">Les statistiques locales ont été réinitialisées.</p>' : ''}
     <aside class="analytics-panel analytics-consent"><strong>Pour être comptés, les visiteurs doivent accepter la mesure d’audience.</strong>
-      <p>Ils peuvent le faire dans la bannière ou dans <a href="/apercu/gestion-des-cookies.html">Gestion des cookies</a>. La collecte démarre après leur accord.</p></aside>
+      <p>Les visites de cet aperçu alimentent les statistiques du back-office après accord. Acceptez la mesure d’audience dans la bannière ou dans <a href="/apercu/gestion-des-cookies.html">Gestion des cookies</a>. </p></aside>
     ${body}
     ${demo ? '' : '<p><a class="analytics-reset" href="/analytics/reset">Réinitialiser les statistiques</a></p>'}</main></body></html>` };
 }

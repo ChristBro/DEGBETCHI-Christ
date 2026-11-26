@@ -76,7 +76,7 @@ function render(data, token, version, message, messages) {
   <title>Administration · Néotisse</title><link rel="stylesheet" href="/admin.css"><script src="/admin.js" defer></script></head>
   <body><header><a class="admin-brand" href="/apercu/index.html" aria-label="Voir le site Néotisse"><img src="/apercu/assets/logo.png" alt="Néotisse" width="130" height="100"></a>
   <nav aria-label="Sections">${links}</nav></header>
-  <main><h1>Administration</h1><p>Après avoir enregistré, ouvrez <a href="/apercu/index.html#livre-or" target="_blank" rel="noopener">le livre d’or sur le site local ↗</a>. Pour mettre à jour la version en ligne, partagez le fichier de contenu sur GitHub et redéployez le site.</p><p class="feedback" role="status">${escape(message)}</p>
+  <main><h1>Administration</h1><p><a href="/apercu/index.html">Ouvrir l’aperçu local</a></p><p>Pour tester la collecte, cliquez sur <strong>Ouvrir l’aperçu local</strong>. Les visites de cet aperçu alimentent les statistiques du back-office après acceptation de la mesure d’audience.</p><p>Après avoir enregistré, ouvrez <a href="/apercu/index.html#livre-or" target="_blank" rel="noopener">le livre d’or sur le site local ↗</a>. Pour mettre à jour la version en ligne, partagez le fichier de contenu sur GitHub et redéployez le site.</p><p class="feedback" role="status">${escape(message)}</p>
   <form id="content-editor" method="post" action="/"><input type="hidden" name="token" value="${token}"><input type="hidden" name="revision" value="${version}">
   ${sections}<div class="save"><span>Les modifications sont enregistrées dans le projet local.</span><button type="submit">Enregistrer</button></div></form><section id="messages"><h2>Messages reçus</h2><p>Messages envoyés depuis le formulaire de l’aperçu local.</p>${inbox || "<p>Aucun message pour le moment.</p>"}</section></main></body></html>`;
 }
@@ -193,7 +193,13 @@ export function adminServer(contentPath) {
       if (!allowed.test(file)) return send(404, 'text/plain', 'Page introuvable.');
       try {
         const path = file === 'content.js' ? contentPath : new URL('../' + file, import.meta.url);
-        return send(200, types[file.split('.').at(-1)], readFileSync(path), true);
+        const extension = file.split('.').at(-1);
+        const content = readFileSync(path);
+        const body = extension === 'html'
+          ? content.toString('utf8').replace(/<body\b[^>]*>/i, (tag) =>
+            tag + '<nav aria-label="Aperçu local" style="display:flex;justify-content:flex-end;padding:0.5rem 1rem;background:#fff;border-bottom:1px solid #ddd"><a class="button" href="/">Retour vers le back office</a></nav>')
+          : content;
+        return send(200, types[extension], body, true);
       } catch {
         return send(404, 'text/plain', 'Page introuvable.');
       }
